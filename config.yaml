@@ -1,0 +1,218 @@
+# Application Configuration
+# Contact: support@amdox.in
+
+# Emotion Detection Settings
+emotion_detection:
+  text:
+    model: "distilbert-base-uncased-finetuned-sst-2-english"
+    threshold: 0.7
+    batch_size: 32
+  
+  face:
+    model: "deepface"
+    backend: "opencv"  # Options: opencv, ssd, mtcnn, retinaface
+    update_interval: 2  # seconds
+    confidence_threshold: 0.6
+  
+  speech:
+    model: "ehcalabres/wav2vec2-lg-xlsr-en-speech-emotion-recognition"
+    sample_rate: 16000
+    chunk_duration: 3  # seconds
+
+# Multi-Modal Fusion
+fusion:
+  weights:
+    text: 0.3
+    face: 0.4
+    speech: 0.3
+  use_attention: true  # Use confidence-based attention mechanism
+
+# Task Recommendation
+task_recommendation:
+  num_default_recommendations: 5
+  categories:
+    - creative
+    - analytical
+    - collaborative
+    - routine
+    - learning
+    - wellness
+    - communication
+
+# Stress Detection & Alerts
+alerts:
+  stress_threshold: 0.75  # 0-1 scale
+  consecutive_alerts: 3  # Number of consecutive high readings
+  time_window_hours: 24
+  
+  notification_channels:
+    - email
+    - slack
+  
+  severity_levels:
+    critical: 0.9
+    high: 0.75
+    medium: 0.6
+  
+  recipients:
+    hr: ["hr@company.com"]
+    management: ["manager@company.com"]
+
+# Privacy & Security
+privacy:
+  anonymize_data: true
+  encryption_enabled: true
+  data_retention_days: 90
+  gdpr_compliant: true
+  
+  anonymization:
+    hash_algorithm: "sha256"
+    salt_length: 32
+  
+  encryption:
+    algorithm: "AES-256"
+    key_rotation_days: 30
+
+# Database
+database:
+  type: "postgresql"  # Options: postgresql, mongodb, sqlite
+  host: "localhost"
+  port: 5432
+  name: "amdox_task_optimizer"
+  user: "amdox_user"
+  password: "${DB_PASSWORD}"  # Use environment variable
+  
+  connection_pool:
+    min_size: 5
+    max_size: 20
+  
+  backup:
+    enabled: true
+    frequency: "daily"
+    retention_days: 30
+
+# API Settings
+api:
+  host: "0.0.0.0"
+  port: 8000
+  debug: false
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:5000"
+  
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 60
+  
+  authentication:
+    enabled: true
+    jwt_secret: "${JWT_SECRET}"
+    token_expiry_hours: 24
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "json"
+  
+  file:
+    enabled: true
+    path: "logs/"
+    rotation: "500 MB"
+    retention: "10 days"
+  
+  console:
+    enabled: true
+    colorize: true
+
+# Analytics
+analytics:
+  enable_tracking: true
+  aggregation_interval: "1 hour"
+  
+  metrics:
+    - mood_score
+    - stress_level
+    - task_completion
+    - alert_frequency
+  
+  dashboards:
+    - individual
+    - team
+    - organization
+
+# Performance
+performance:
+  cache_enabled: true
+  cache_ttl: 300  # seconds
+  
+  async_processing: true
+  worker_threads: 4
+  
+  model_optimization:
+    use_gpu: true
+    mixed_precision: true
+    batch_inference: true
+
+# Monitoring
+monitoring:
+  enabled: true
+  prometheus_port: 9090
+  
+  health_check:
+    interval: 30  # seconds
+    timeout: 5
+  
+  alerts:
+    - high_error_rate
+    - slow_response_time
+    - high_memory_usage
+
+# Feature Flags
+features:
+  real_time_webcam: true
+  speech_analysis: true
+  team_analytics: true
+  historical_tracking: true
+  predictive_analytics: false  # Coming soon
+  
+# Integration
+integrations:
+  slack:
+    enabled: false
+    webhook_url: "${SLACK_WEBHOOK_URL}"
+  
+  email:
+    enabled: true
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 587
+    sender: "noreply@amdox.in"
+    username: "${EMAIL_USERNAME}"
+    password: "${EMAIL_PASSWORD}"
+  
+  calendar:
+    enabled: false
+    provider: "google"  # google, outlook, ical
+  
+  hr_system:
+    enabled: false
+    api_endpoint: "${HR_SYSTEM_API}"
+    api_key: "${HR_SYSTEM_KEY}"
+
+# Development
+development:
+  debug_mode: true
+  hot_reload: true
+  mock_data: false
+  test_mode: false
+
+# Production
+production:
+  debug_mode: false
+  ssl_enabled: true
+  load_balancing: true
+  auto_scaling: true
+  
+  backup:
+    enabled: true
+    frequency: "hourly"
+    retention: "30 days"
